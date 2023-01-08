@@ -11,6 +11,8 @@ public static class Authentication
     private static PKCETokenResponse _initialResponse;
 
     private static string _clientId;
+    
+    private static string _clientSecret;
 
     private static SpotifyClient _spotifyClient;
     public static SpotifyClient? SpotifyClient { get; private set; }
@@ -35,6 +37,22 @@ public static class Authentication
         {
             RefreshAuthentication();
         }
+    }
+    
+    public static void UserLessAuthenticate(string clientId = "")
+    {
+        if (clientId != string.Empty) _clientId = clientId;
+        _clientSecret = StorageHandler.ClientSecret;
+        
+        var config = SpotifyClientConfig
+            .CreateDefault()
+            .WithAuthenticator(new ClientCredentialsAuthenticator(_clientId, _clientSecret));
+        try
+        {
+            SpotifyClient = new SpotifyClient(config);
+            OnAuthenticate?.Invoke();
+        }
+        catch (APIException) { }
     }
 
     private static void NewAuthentication()

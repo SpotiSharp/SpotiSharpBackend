@@ -16,6 +16,18 @@ public static class StorageHandler
         }
     }
     
+    private static string _clientSecret = string.Empty;
+    
+    public static string ClientSecret
+    {
+        get { return _clientSecret; }
+        set
+        {
+            _clientSecret = value;
+            OnDataChange?.Invoke("clientSecret", value);
+        }
+    }
+    
     private static string _refreshToken = string.Empty;
 
     public static string RefreshToken
