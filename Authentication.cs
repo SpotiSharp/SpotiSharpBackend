@@ -21,7 +21,7 @@ public static class Authentication
     {
         _clientId = StorageHandler.ClientId;
         string refreshToken = StorageHandler.RefreshToken;
-        if (_clientId != null && refreshToken != null) RefreshAuthentication(refreshToken);
+        if (_clientId != string.Empty && refreshToken != string.Empty) RefreshAuthentication(refreshToken);
     }
 
     public static void Authenticate(string clientId = "")
@@ -37,7 +37,7 @@ public static class Authentication
         }
     }
 
-    private static async void NewAuthentication()
+    private static void NewAuthentication()
     {
         // Generates a secure random verifier of length 100 and its challenge
         (_verifier, string challenge) = PKCEUtil.GenerateCodes();

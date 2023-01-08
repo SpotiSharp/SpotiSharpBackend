@@ -1,6 +1,6 @@
 ﻿namespace SpotiSharpBackend;
 
-public delegate void DataChange();
+public delegate void DataChange(string key, string value);
 
 public static class StorageHandler
 {
@@ -12,7 +12,7 @@ public static class StorageHandler
         set
         {
             _clientId = value;
-            OnDataChange?.Invoke();
+            OnDataChange?.Invoke("clientId", value);
         }
     }
     
@@ -24,7 +24,7 @@ public static class StorageHandler
         set
         {
             _refreshToken = value;
-            OnDataChange?.Invoke();
+            OnDataChange?.Invoke("refreshToken", value);
         }
     }
     
