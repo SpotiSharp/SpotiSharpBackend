@@ -41,7 +41,7 @@ public static class Authentication
     
     public static void UserLessAuthenticate()
     {
-        _clientId = StorageHandler.ClientSecret;
+        _clientId = StorageHandler.ClientId;
         _clientSecret = StorageHandler.ClientSecret;
         
         var config = SpotifyClientConfig
