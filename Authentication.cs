@@ -39,9 +39,9 @@ public static class Authentication
         }
     }
     
-    public static void UserLessAuthenticate(string clientId = "")
+    public static void UserLessAuthenticate()
     {
-        if (clientId != string.Empty) _clientId = clientId;
+        _clientId = StorageHandler.ClientSecret;
         _clientSecret = StorageHandler.ClientSecret;
         
         var config = SpotifyClientConfig
