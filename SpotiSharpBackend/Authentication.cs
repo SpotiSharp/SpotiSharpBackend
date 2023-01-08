@@ -1,8 +1,6 @@
-﻿using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Storage;
-using SpotifyAPI.Web;
+﻿using SpotifyAPI.Web;
 
-namespace SpotifyAPI;
+namespace SpotiSharpBackend;
 
 public delegate void AuthenticationComplete();
 
@@ -18,11 +16,11 @@ public static class Authentication
     public static SpotifyClient? SpotifyClient { get; private set; }
 
     public static event AuthenticationComplete OnAuthenticate;
-
+    
     static Authentication()
     {
-        _clientId = SecureStorage.Default.GetAsync("clientId").Result;
-        string refreshToken = SecureStorage.Default.GetAsync("refreshToken").Result;
+        _clientId = StorageHandler.ClientId;
+        string refreshToken = StorageHandler.RefreshToken;
         if (_clientId != null && refreshToken != null) RefreshAuthentication(refreshToken);
     }
 
@@ -77,8 +75,8 @@ public static class Authentication
         // start webserver for callback
         _ = CallBackListener.Instance;
 
-        var uri = loginRequest.ToUri();
-        await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+        Uri uri = loginRequest.ToUri();
+        MauiConnector.TriggerBrowerOpen(uri);
     }
 
     private static async void RefreshAuthentication(string refreshToken = null)
@@ -91,12 +89,12 @@ public static class Authentication
             );
             
             SpotifyClient = new SpotifyClient(newResponse.AccessToken);
-            SecureStorage.Default.SetAsync("refreshToken", newResponse.RefreshToken);
+            StorageHandler.RefreshToken = newResponse.RefreshToken;
             OnAuthenticate?.Invoke();
         }
         catch (APIException)
         {
-            SecureStorage.Default.Remove("refreshToken");
+            StorageHandler.RefreshToken = string.Empty;
         }
     }
 
@@ -107,8 +105,8 @@ public static class Authentication
         );
 
         SpotifyClient = new SpotifyClient(_initialResponse.AccessToken);
-        SecureStorage.Default.SetAsync("clientId", _clientId);
-        SecureStorage.Default.SetAsync("refreshToken", _initialResponse.RefreshToken);
+        StorageHandler.ClientId = _clientId;
+        StorageHandler.RefreshToken = _initialResponse.RefreshToken;
         OnAuthenticate?.Invoke();
     }
 }

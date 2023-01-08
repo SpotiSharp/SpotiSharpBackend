@@ -2,7 +2,7 @@
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Http;
 
-namespace SpotiSharp.Models;
+namespace SpotiSharpBackend;
 
 // This is a slightly modified version of the default SimplePaginator (delays have been added) more to that under https://johnnycrazy.github.io/SpotifyAPI-NET/docs/pagination
 public class CustomPaginator : IPaginator

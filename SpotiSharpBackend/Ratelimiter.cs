@@ -1,4 +1,4 @@
-﻿namespace SpotifyAPI;
+﻿namespace SpotiSharpBackend;
 
 public static class Ratelimiter
 {

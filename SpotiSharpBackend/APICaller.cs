@@ -1,8 +1,6 @@
 ﻿using SpotifyAPI.Web;
-using SpotiSharp.Models;
 
-
-namespace SpotifyAPI;
+namespace SpotiSharpBackend;
 
 public class APICaller
 {
