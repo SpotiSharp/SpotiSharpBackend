@@ -64,5 +64,17 @@ public static class StorageHandler
         }
     }
     
+    private static string _collaborationSession = string.Empty;
+    
+    public static string CollaborationSession
+    {
+        get { return _collaborationSession; }
+        set
+        {
+            _collaborationSession = value;
+            OnDataChange?.Invoke("collaborationSession", value);
+        }
+    }
+    
     public static event DataChange OnDataChange;
 }
