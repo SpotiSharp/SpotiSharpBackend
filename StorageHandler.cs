@@ -39,6 +39,30 @@ public static class StorageHandler
             OnDataChange?.Invoke("refreshToken", value);
         }
     }
+
+    private static bool _isUsingCollaborationHost = false;
+
+    public static bool IsUsingCollaborationHost
+    {
+        get { return _isUsingCollaborationHost; }
+        set
+        {
+            _isUsingCollaborationHost = value;
+            OnDataChange?.Invoke("isUsingCollaborationHost", value ? "1" : "0");
+        }
+    }
+    
+    private static string _collaborationHostAddress = string.Empty;
+
+    public static string CollaborationHostAddress
+    {
+        get { return _collaborationHostAddress; }
+        set
+        {
+            _collaborationHostAddress = value;
+            OnDataChange?.Invoke("collaborationHostAddress", value);
+        }
+    }
     
     public static event DataChange OnDataChange;
 }
